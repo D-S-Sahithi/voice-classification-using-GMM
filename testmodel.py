@@ -6,25 +6,22 @@ import scipy.io.wavfile as wav
 from sklearn.mixture import GaussianMixture
 import pickle
 import os
-import audiofeatures
+import audiofeatures as audiofeatures
 import warnings
 warnings.filterwarnings("ignore")
 
-def test(): 
+def test(sahithi): 
+    path=sahithi
     modelpath = "models"       
     
     gmm_files = [os.path.join(modelpath,fname) for fname in 
                   os.listdir(modelpath) if fname.endswith('.gmm')]
     
-    #Load the Gaussian gender Models
     models    = [pickle.load(open(fname,'rb')) for fname in gmm_files]
     speakers   = [fname.split("\\")[-1].split(".gmm")[0] for fname 
                   in gmm_files]
     # Read the test directory and get the list of test audio files 
-      
-        
-         
-    path="training_audios/akshaya_5.wav"
+
     rate,sig = wav.read(path)
     mfcc_feat=audiofeatures.extract_features(sig,rate)
         
@@ -42,4 +39,3 @@ def test():
     name = file_name.split('_')[0]
     print ("\tdetected as - ", name)
     return speakers[winner]
-test()

@@ -7,8 +7,8 @@ from python_speech_features import mfcc
 from python_speech_features import logfbank
 import scipy
 import warnings
-import audiofeatures
-import preprocessing
+import audiofeatures as audiofeatures
+import preprocessing as preprocessing
 warnings.filterwarnings("ignore")
 
 def train_model(x):
@@ -24,9 +24,7 @@ def train_model(x):
     dest = r"models/"
     train_file = "development_set_enroll.txt"        
     file_paths = open(train_file,'r')
-    print(os.getcwd())
     count = 1
-    # Extracting features for each speaker (5 files per speakers)
     features = np.asarray(())
     for path in file_paths:    
         path = path.strip()
@@ -40,15 +38,17 @@ def train_model(x):
             features = mfcc_feat
         else:
             features = np.vstack((features, mfcc_feat))
-        # when features of 5 files of speaker are concatenated, then do model training
         if count == 5:    
             gmm = GaussianMixture(n_components = 16, max_iter = 200, covariance_type='diag',n_init = 10)
             gmm.fit(features)
-            
-            # dumping the trained gaussian model
-            picklefile = path.split("-")[0]+".gmm"
+            picklefile = path.split("_")[0]+".gmm"
+            # name=picklefile.plit("_")[0]
             pickle.dump(gmm,open(dest + picklefile,'wb'))
             features = np.asarray(())
             count = 0
         count = count + 1
-#train_model('akshaya')
+    return True
+
+    
+# hey= train_model("nikhil")
+# print(hey)

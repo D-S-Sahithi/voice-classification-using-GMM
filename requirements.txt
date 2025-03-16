@@ -3,3 +3,7 @@ scipy
 librosa
 numpy
 soundfile
+python_speech_features
+librosa
+matplotlib
+flask
