@@ -51,4 +51,4 @@ def train_model(x):
             features = np.asarray(())
             count = 0
         count = count + 1
-train_model('akshaya')
+#train_model('akshaya')
